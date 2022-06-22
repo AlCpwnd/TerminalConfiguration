@@ -21,9 +21,9 @@
 				"foreground": "#000000",
 				"background": "#0000ff",
 				"background_templates": [
-					"{{if ge .Percentage 40 }} ##fae501 {{end}}",
-					"{{if and (lt .Percentage 40) (ge .Percentage 20) }}#fa9201{{end}}",
-					"{{if lt .Percentage 20 }}#f70000{{end}}"
+					"{{if ge .Percentage 40 }}#fae501{{end}}",
+					"{{if and (lt .Percentage 40) (ge .Percentage 20)}}#fa9201{{end}}",
+					"{{if lt .Percentage 20}}#f70000{{end}}"
 				],
 				"properties": {
 					"discharging_icon": "\uf490 ",
