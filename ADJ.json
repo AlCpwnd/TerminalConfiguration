@@ -82,7 +82,7 @@
 					"always_enabled": true
 				},
 				"style": "plain",
-				"template": "{{ if gt .Code 0 }} \uf071  {{ else }} \uf42e {{ end }}",
+				"template": "{{ if gt .Code 0 }} \uf071 {{ else }} \uf42e {{ end }}",
 				"type": "exit"
 			},
 			{
