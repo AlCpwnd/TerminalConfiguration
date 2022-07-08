@@ -70,7 +70,7 @@
 					}
 				},
 				"style": "plain",
-				"template": "<#000000,#0077c2>\ue0b0</> {{ .Path }} <#0077c2,transparent>\ue0b4</>",
+				"template": "<transparent,#0077c2>\ue0b0</> {{ .Path }} <#0077c2,transparent>\ue0b4</>",
 				"type": "path"
 			},
 			{
