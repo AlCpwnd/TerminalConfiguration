@@ -70,7 +70,7 @@
 						"~\\Git" : "\uf09b"
 					}
 				},
-				"style": "plain",
+				"style": "powerline",
 				"template": "<transparent,#0077c2>\ue0b0</> {{ .Path }} <#0077c2,transparent>\ue0b4</>",
 				"type": "path"
 			},
