@@ -65,8 +65,9 @@
 					"style": "mixed",
 					"home_icon" : "\uf7db",
 					"mapped_locations" : {
-						"C:\\Users\\adj\\OneDrive - Megabyte" : "\ue762",
-						"C:\\Users\\adj\\Downloads" : "\uf6d9"
+						"~\\OneDrive - BKM NV" : "\ue762",
+						"~\\Downloads" : "\uf6d9",
+						"~\\Git" : "\uf09b"
 					}
 				},
 				"style": "plain",
