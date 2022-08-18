@@ -19,18 +19,18 @@
 				"leading_diamond": "\ue0b2",
 				"trailing_diamond": "\ue0b0",
 				"foreground": "#000000",
-				"background": "#0000ff",
+				"background": "#00ff00",
 				"background_templates": [
-					"{{if ge .Percentage 40 }}#fae501{{end}}",
-					"{{if and (lt .Percentage 40) (ge .Percentage 20)}}#fa9201{{end}}",
-					"{{if lt .Percentage 20}}#f70000{{end}}"
+					"{{if and (eq .State.String \"Discharging\") (lt .Percentage 50) (ge .Percentage 40)}}#fae501{{end}}",
+					"{{if and (eq .State.String \"Discharging\") (lt .Percentage 40) (ge .Percentage 20)}}#fa9201{{end}}",
+					"{{if and (eq .State.String \"Discharging\") (lt .Percentage 20)}}#f70000{{end}}"
 				],
 				"properties": {
 					"discharging_icon": "\uf490 ",
 					"charging_icon": "\uf0e7 ",
 					"charged_icon": "\ufba3 "
 				},
-				"template": "{{ if and (lt .Percentage 50) (not .Error) }} {{ .Percentage }}{{ .Icon }}{{ end }}"
+				"template": "{{if and (eq .State.String \"Discharging\") (lt .Percentage 50) (not .Error) }} {{ .Percentage }}{{ end }} {{ .Icon }}"
 			}
 		],
 		"type": "prompt",
