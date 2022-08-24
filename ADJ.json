@@ -21,9 +21,9 @@
 				"foreground": "#000000",
 				"background": "#00ff00",
 				"background_templates": [
-					"{{if and (eq .State.String \"Discharging\") (lt .Percentage 50) (ge .Percentage 40)}}#fae501{{end}}",
-					"{{if and (eq .State.String \"Discharging\") (lt .Percentage 40) (ge .Percentage 20)}}#fa9201{{end}}",
-					"{{if and (eq .State.String \"Discharging\") (lt .Percentage 20)}}#f70000{{end}}"
+					"{{if or (eq .State.String \"Discharging\") (lt .Percentage 50) (ge .Percentage 40)}}#fae501{{end}}",
+					"{{if or (eq .State.String \"Discharging\") (lt .Percentage 40) (ge .Percentage 20)}}#fa9201{{end}}",
+					"{{if or (eq .State.String \"Discharging\") (lt .Percentage 20)}}#f70000{{end}}"
 				],
 				"properties": {
 					"discharging_icon": "\uf490 ",
