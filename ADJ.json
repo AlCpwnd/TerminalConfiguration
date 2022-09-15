@@ -22,7 +22,7 @@
 				"background": "#00ff00",
 				"background_templates": [
 					"{{if and (lt .Percentage 50) (ge .Percentage 40)}}#fae501{{end}}",
-					"{{if adn (lt .Percentage 40) (ge .Percentage 20)}}#fa9201{{end}}",
+					"{{if and (lt .Percentage 40) (ge .Percentage 20)}}#fa9201{{end}}",
 					"{{if and (lt .Percentage 20)}}#f70000{{end}}"
 				],
 				"properties": {
