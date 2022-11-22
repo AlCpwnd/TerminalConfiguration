@@ -1,3 +1,5 @@
+#Requires -RunasAdmin
+
 $Modules = @(
     "CredentialManager",
     "MSOnline",
@@ -8,11 +10,11 @@ $Modules = @(
 
 foreach($Module in $Modules){
     if(!(Get-Module -Name $Module -ListAvailable)){
-        Write-Host "`t[i]:Installing $Module" -ForegroundColor Yellow
+        Write-Host "> Installing $Module"
         Install-Module $Module
     }
     else{
-        Write-Host "`t[u]:Updating $Module" -ForegroundColor Yellow
+        Write-Host "> Updating $Module" -ForegroundColor Yellow
         Update-Module $Module
     }    
 }
