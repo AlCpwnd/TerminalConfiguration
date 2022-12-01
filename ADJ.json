@@ -41,19 +41,18 @@
 		"newline" : true,
 		"segments": [
 			{
-				"background": "#0077c2",
-				"foreground": "#ffffff",
+				"foreground": "#0077c2",
 				"style": "plain",
 				"properties" : {
 					"mapped_shell_names" : {
 						"pwsh" : "PS"
 					}
 				},
-				"template": "<#0077c2,transparent>\ue0b6</> \uf489 {{ .Name }} <transparent,#0077c2>\ue0b2</>",
+				"template": "<#ffffff>[</>\uf489 {{ .Name }}<#ffffff>]</>",
 				"type": "shell"
 			},
 			{
-				"foreground": "#0077c2",
+				"foreground": "#ffffff",
 				"style": "plain",
 				"template": "{{ if .SSHSession }}\uF817 {{ end }} \uf007 {{ .UserName }} ",
 				"type": "session"
@@ -62,7 +61,7 @@
 				"background": "#0077c2",
 				"properties": {
 					"folder_separator_icon": " \ue0b1 ",
-					"style": "mixed",
+					"style": "agnoster",
 					"home_icon" : "\uf7db",
 					"mapped_locations" : {
 						"~\\OneDrive - BKM NV" : "\ue762",
@@ -70,7 +69,7 @@
 						"~\\Git" : "\uf09b"
 					}
 				},
-				"style": "plain",
+				"style": "powerline",
 				"template": "<transparent,#0077c2>\ue0b0</> {{ .Path }} <#0077c2,transparent>\ue0b4</>",
 				"type": "path"
 			},
