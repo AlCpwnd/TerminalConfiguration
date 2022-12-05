@@ -48,7 +48,7 @@
 						"pwsh" : "PS"
 					}
 				},
-				"template": "<#ffffff>[</>\uf489 {{ .Name }}<#ffffff>[</>",
+				"template": "<#ffffff>[</>\uf489 {{ .Name }}<#ffffff>]</>",
 				"type": "shell"
 			},
 			{
@@ -58,19 +58,18 @@
 				"type": "session"
 			},
 			{
-				"background": "#0077c2",
+				"foreground": "#009dff",
 				"properties": {
-					"folder_separator_icon": " \ue0b1 ",
 					"style": "agnoster",
-					"home_icon" : "\uf7db",
+					"home_icon" : " \uf7db ",
 					"mapped_locations" : {
-						"~\\OneDrive - BKM NV" : "\ue762",
-						"~\\Downloads" : "\uf6d9",
-						"~\\Git" : "\uf09b"
+						"~\\OneDrive - BKM NV" : " \ue762 ",
+						"~\\Downloads" : " \uf6d9 ",
+						"~\\Git" : " \uf09b "
 					}
 				},
-				"style": "powerline",
-				"template": "<#ffffff>[</>{{ .Path }}<#ffffff>[</>",
+				"style": "plain",
+				"template": "<#ffffff>[</>{{ .Path }}<#ffffff> ]</>",
 				"type": "path"
 			},
 			{
