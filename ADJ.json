@@ -61,7 +61,7 @@
 				"foreground": "#009dff",
 				"properties": {
 					"style": "agnoster",
-					"home_icon" : "\uf7db",
+					"home_icon" : "\uf7db ",
 					"mapped_locations" : {
 						"~\\OneDrive - BKM NV" : "\ue762 ",
 						"~\\Downloads" : "\uf6d9 ",
