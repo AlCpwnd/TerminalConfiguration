@@ -54,7 +54,7 @@
 			{
 				"foreground": "#ffffff",
 				"style": "plain",
-				"template": "{{ if eq .Username \"admin\" }} \uf316 {{ end }} \uf007 {{ .UserName }} ",
+				"template": " \uf007 {{ .UserName }} ",
 				"type": "session"
 			},
 			{
