@@ -18,6 +18,7 @@ foreach($Module in $Modules){
         }
     }else{
         Write-Host "> Updating module `'$Module`'"
+        Update-Module -Name $Module
     }
 }
 winget install -exact --id JanDeDobbeleer.OhMyPosh --accept-source-agreements --accept-package-agreements
