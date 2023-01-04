@@ -5,7 +5,7 @@
 		"alignment": "right",
 		"segments": [
 			{
-				"foreground": "#007ACC",
+				"foreground": "#009dff",
 				"template": " {{ .CurrentDate | date .Format }} ",
 				"properties": {
 				"time_format": "15:04:05"
@@ -41,7 +41,7 @@
 		"newline" : true,
 		"segments": [
 			{
-				"foreground": "#0077c2",
+				"foreground": "#009dff",
 				"style": "plain",
 				"properties" : {
 					"mapped_shell_names" : {
