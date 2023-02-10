@@ -1,5 +1,7 @@
 {
-	"$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+	"console_title": true,
+	"console_title_style": "template",
+	"console_title_template": "{{ if .Root }}\u26A1{{end}} {{ .Path }}",
 	"blocks": [
 	{
 		"alignment": "right",
@@ -60,17 +62,32 @@
 			{
 				"foreground": "#009dff",
 				"properties": {
-					"style": "agnoster",
+					"style": "agnoster_short",
 					"home_icon" : "\uf7db ",
 					"mapped_locations" : {
 						"~\\OneDrive - BKM NV" : "\ue762 ",
 						"~\\Downloads" : "\uf6d9 ",
 						"~\\Git" : "\uf09b "
-					}
+					},
+					"folder_separator_icon": "\\",
+					"max_depth": 7,
+            		"enable_hyperlink": true
 				},
 				"style": "plain",
 				"template": "<#ffffff>[</>{{ .Path }}<#ffffff>]</>",
 				"type": "path"
+			},
+			{
+				"type": "git",
+				"style": "plain",
+				"foreground": "#ffffff",
+				"properties": {
+					"display_status": true,
+					"fetch_status": true,
+					"fetch_stash_count": true,
+					"fetch_upstream_icon": true
+				},
+				"template": " {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uF044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uF046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \uF692 {{ .StashCount }}{{ end }}"
 			},
 			{
 				"foreground": "#ffffff",
