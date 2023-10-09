@@ -35,7 +35,8 @@
 				"template": "{{if and (eq .State.String \"Discharging\") (lt .Percentage 50) (not .Error) }} {{ .Percentage }}{{ end }}{{ .Icon }}"
 			}
 		],
-		"type": "prompt"
+		"type": "prompt",
+		"vertical_offset": -1
     },
 	{
 		"alignment": "left",
@@ -43,9 +44,26 @@
 		"segments": [
 			{
 				"foreground": "#009dff",
+				"style": "plain",
+				"properties" : {
+					"mapped_shell_names" : {
+						"pwsh" : "PS"
+					}
+				},
+				"template": "<#ffffff>[</>\uf489 {{ .Name }}<#ffffff>]</>",
+				"type": "shell"
+			},
+			{
+				"foreground": "#ffffff",
+				"style": "plain",
+				"template": " \uf007 {{ .UserName }} ",
+				"type": "session"
+			},
+			{
+				"foreground": "#009dff",
 				"properties": {
 					"style": "agnoster_short",
-					"home_icon" : "\uf7db",
+					"home_icon" : "\uf7db ",
 					"mapped_locations" : {
 						"~\\OneDrive - BKM NV" : "\ue762 ",
 						"~\\Downloads" : "\uf6d9 ",
@@ -56,7 +74,7 @@
             		"enable_hyperlink": true
 				},
 				"style": "plain",
-				"template": "<#ffffff>:</>{{ .Path }}<#ffffff>:</>",
+				"template": "<#ffffff>[</>{{ .Path }}<#ffffff>]</>",
 				"type": "path"
 			},
 			{
