@@ -45,7 +45,7 @@
 				"foreground": "#009dff",
 				"properties": {
 					"style": "agnoster_short",
-					"home_icon" : "\uf7db",
+					"home_icon" : "\uf7db ",
 					"mapped_locations" : {
 						"~\\OneDrive - BKM NV" : "\ue762 ",
 						"~\\Downloads" : "\uf6d9 ",
@@ -56,7 +56,7 @@
             		"enable_hyperlink": true
 				},
 				"style": "plain",
-				"template": "<#ffffff>:</>{{ .Path }}<#ffffff>:</>",
+				"template": "<#ffffff>|:</>{{ .Path }}<#ffffff>:</>",
 				"type": "path"
 			},
 			{
