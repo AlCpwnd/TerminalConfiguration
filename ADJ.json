@@ -1,7 +1,7 @@
 {
 	"console_title": true,
 	"console_title_style": "template",
-	"console_title_template": "{{ if .Root }}\u26A1{{end}} {{ .Path }}",
+	"console_title_template": "{{ if .Root }}\ueb06{{end}} {{ .Path }}",
 	"auto_upgrade": true,
 	"blocks": [
 	{
@@ -31,7 +31,7 @@
 				"properties": {
 					"discharging_icon": " \uf490 ",
 					"charging_icon": " \uf0e7 ",
-					"charged_icon": " \ufba3 "
+					"charged_icon": " \udb81\udea5 "
 				},
 				"template": "{{if and (eq .State.String \"Discharging\") (lt .Percentage 50) (not .Error) }} {{ .Percentage }}{{ end }}{{ .Icon }}"
 			}
@@ -46,10 +46,10 @@
 				"foreground": "#009dff",
 				"properties": {
 					"style": "agnoster_short",
-					"home_icon" : "\uf7db ",
+					"home_icon" : "\udb80\udedc ",
 					"mapped_locations" : {
-						"~\\OneDrive - BKM NV" : "\ue762 ",
-						"~\\Downloads" : "\uf6d9 ",
+						"~\\OneDrive - Eurelec Trading" : "\udb80\udfca ",
+						"~\\Downloads" : "\udb81\udf92 ",
 						"~\\Git" : "\uf09b "
 					},
 					"folder_separator_icon": "\\",
@@ -70,7 +70,7 @@
 					"fetch_stash_count": true,
 					"fetch_upstream_icon": true
 				},
-				"template": " {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uF044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uF046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \uF692 {{ .StashCount }}{{ end }}"
+				"template": " {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \udb80\udd93 {{ .StashCount }}{{ end }}"
 			},
 			{
 				"foreground": "#ffffff",
