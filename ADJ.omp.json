@@ -56,5 +56,11 @@
 			],
 			"type": "prompt"
 		}],
+	"console_title_template": "{{ .Folder }}",
+	"transient_prompt": {
+	  "background": "transparent",
+	  "foreground": "#FEF5ED",
+	  "template": "\udb80\udd6c"
+	},
 	"version": 4
 }
