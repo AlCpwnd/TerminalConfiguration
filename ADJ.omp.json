@@ -15,9 +15,9 @@
 						"{{if and (lt .Percentage 20)}}#f70000{{end}}"
 					],
 					"properties": {
-						"discharging_icon": " \uf490 ",
-						"charging_icon": " \uf0e7 ",
-						"charged_icon": " \ufba3 "
+						"discharging_icon": " \udb84\udea3 ",
+						"charging_icon": " \udb80\udc84 ",
+						"charged_icon": " \udb81\udea5 "
 					},
 					"template": "{{if and (eq .State.String \"Discharging\") (lt .Percentage 50) (not .Error) }} {{ .Percentage }}{{ end }}{{ .Icon }}"
 				},
