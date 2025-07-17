@@ -17,6 +17,9 @@ foreach($Module in $Modules){
     Install-Module -Name $Module -Force
 }
 
+# Copying VIM configuration
+Copy-Item .\.vimrc $HOME
+
 # Setting up PowerShell profile.
 ## OhMyPosh installation.
 winget install --exact --id JanDeDobbeleer.OhMyPosh --accept-source-agreements --accept-package-agreements
