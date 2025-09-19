@@ -28,9 +28,9 @@
 						"style": "folder",
 						"home_icon": "\ueb06 ",
 						"mapped_locations": {
-							"~/Git": "\ue709 ",
-							"~/Downloads": "\uf409 ",
-							"~/OneDrive - Eurelec Trading": "\udb80\udfca "
+							"~/Git" : "\ue709 ",
+							"~/Downloads" : "\uf409 ",
+							"~/OneDrive - Eurelec Trading" : "\udb80\udfca "
 						}
 					},
 					"template": "{{ .Path }}"
@@ -39,35 +39,34 @@
 					"type": "git",
 					"style": "plain",
 					"properties": {
-						"branch_icon": "\ue725 ",
-						"fetch_stash_count": true,
-						"fetch_status": true,
-						"fetch_upstream_icon": true,
-						"fetch_worktree_count": true
+					  "branch_icon": "\ue725 ",
+					  "fetch_stash_count": true,
+					  "fetch_status": true,
+					  "fetch_upstream_icon": true,
+					  "fetch_worktree_count": true
 					},
 					"template": " {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \udb80\udd93 {{ .StashCount }}{{ end }}"
-				},
+				},				
 				{
-					"type": "status",
-					"style": "plain",
+					"type" : "status",
+					"style" : "plain",
 					"foreground": "#ffffff",
-					"foreground_templates": [
+					"foreground_templates":[
 						"{{ if .Error }}#ff0000{{ end }}"
 					],
-					"template": "> ",
-					"properties": {
+					"template" : "> ",
+					"properties":{
 						"always_enabled": true
 					}
 				}
 			],
 			"type": "prompt"
-		}
-	],
+		}],
 	"console_title_template": "{{ .Folder }}",
 	"transient_prompt": {
-		"background": "transparent",
-		"foreground": "#FEF5ED",
-		"template": "> "
+	  "background": "transparent",
+	  "foreground": "#FEF5ED",
+	  "template": "\udb80\udd6c "
 	},
 	"version": 4
 }
