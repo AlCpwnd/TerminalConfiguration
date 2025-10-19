@@ -54,7 +54,7 @@
 					"foreground_templates": [
 						"{{ if .Error }}#ff0000{{ end }}"
 					],
-					"template": "> ",
+					"template": ": ",
 					"properties": {
 						"always_enabled": true
 					}
@@ -67,7 +67,7 @@
 	"transient_prompt": {
 		"background": "transparent",
 		"foreground": "#FEF5ED",
-		"template": "> "
+		"template": "|>"
 	},
 	"version": 4
 }
