@@ -1,0 +1,73 @@
+{
+	"auto_upgrade": true,
+	"blocks": [
+		{
+			"alignment": "left",
+			"newline": true,
+			"segments": [
+				{
+					"type": "battery",
+					"style": "plain",
+					"foreground": "#00ff00",
+					"background_templates": [
+						"{{if and (lt .Percentage 50) (ge .Percentage 40)}}#fae501{{end}}",
+						"{{if and (lt .Percentage 40) (ge .Percentage 20)}}#fa9201{{end}}",
+						"{{if and (lt .Percentage 20)}}#f70000{{end}}"
+					],
+					"properties": {
+						"discharging_icon": " \udb84\udea3 ",
+						"charging_icon": " \udb80\udc84 ",
+						"charged_icon": " \udb81\udea5 "
+					},
+					"template": "{{if and (eq .State.String \"Discharging\") (lt .Percentage 50) (not .Error) }} {{ .Percentage }}{{ end }}{{ .Icon }}"
+				},
+				{
+					"type": "path",
+					"style": "plain",
+					"properties": {
+						"style": "folder",
+						"home_icon": "\ueb06 ",
+						"mapped_locations": {
+							"~/Git": "\ue709 ",
+							"~/Downloads": "\uf409 ",
+							"~/OneDrive - Eurelec Trading": "\udb80\udfca "
+						}
+					},
+					"template": "{{ .Path }}"
+				},
+				{
+					"type": "git",
+					"style": "plain",
+					"properties": {
+						"branch_icon": "\ue725 ",
+						"fetch_stash_count": true,
+						"fetch_status": true,
+						"fetch_upstream_icon": true,
+						"fetch_worktree_count": true
+					},
+					"template": " {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \udb80\udd93 {{ .StashCount }}{{ end }}"
+				},
+				{
+					"type": "status",
+					"style": "plain",
+					"foreground": "#ffffff",
+					"foreground_templates": [
+						"{{ if .Error }}#ff0000{{ end }}"
+					],
+					"template": "> ",
+					"properties": {
+						"always_enabled": true
+					}
+				}
+			],
+			"type": "prompt"
+		}
+	],
+	"console_title_template": "{{ .Folder }}",
+	"transient_prompt": {
+		"background": "transparent",
+		"foreground": "#FEF5ED",
+		"template": "> "
+	},
+	"version": 4
+}
