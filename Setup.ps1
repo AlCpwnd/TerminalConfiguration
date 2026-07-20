@@ -34,7 +34,7 @@ foreach ($Module in $Modules) {
 }
 
 # Copying VIM configuration
-Write-Host "> Copying vim profile"
+Write-Host "> Copying vim profile" -ForegroundColor Green
 Copy-Item .\Profiles\.vimrc $HOME
 
 # Using winget to install required programs.
