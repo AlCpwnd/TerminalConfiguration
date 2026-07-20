@@ -9,6 +9,7 @@ foreach($font in $fonts){
 }
 
 # Defining PSGallery as a trusted repository.
+Write-Host "> Defining repositories." -ForegroundColor Green
 if ((Get-PSRepository -Name PSGallery).InstallationPolicy -ne 'Trusted') {
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 }
@@ -16,6 +17,7 @@ if ((Get-PSRepository -Name PSGallery).InstallationPolicy -ne 'Trusted') {
 # Installing package provider.
 $PackageProviders = @('NuGet')
 foreach ($PackageProvider in $PackageProviders) {
+    Write-Host "> Installing package providers: $PackageProvider" -ForegroundColor Green
     Install-PackageProvider -Name $PackageProvider -Force
 }
 
@@ -26,7 +28,8 @@ foreach ($Module in $Modules) {
 }
 
 # Copying VIM configuration
-Copy-Item .\.vimrc $HOME
+Write-Host "> Copying vim profile"
+Copy-Item .\Profiles\.vimrc $HOME
 
 # Using winget to install required programs.
 $apps = 'JanDeDobbeleer.OhMyPosh','vim.vim'
@@ -41,6 +44,7 @@ $ProfileUrl = 'https://raw.githubusercontent.com/AlCpwnd/TerminalConfiguration/m
 Invoke-WebRequest -Uri $ProfileUrl -UseBasicParsing -OutFile $PROFILE
 
 # Configures Windows Terminal settings.
+Write-Host "> Importing Windows Terminal settings." -ForegroundColor Green
 $SettingsPath = (Get-ChildItem -Path $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_*\LocalState\settings.json).FullName
 $settings = Get-Content -Path $SettingsPath | ConvertFrom-Json
 
