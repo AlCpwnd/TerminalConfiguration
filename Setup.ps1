@@ -1,10 +1,11 @@
 #Requires -RunAsAdministrator
 
 # Installing fonts.
+Write-Host "> Installing fonts." -ForegroundColor Green
 $fonts = Get-ChildItem -Path .\Font -Include *.ttf, *.otf
 $shell = New-Object -ComObject Shell.Application
 $fontsFolder = $shell.NameSpace(0x14)
-foreach($font in $fonts){
+foreach ($font in $fonts) {
     $fontsFolder.CopyHere($font.FullName)
 }
 
@@ -24,7 +25,12 @@ foreach ($PackageProvider in $PackageProviders) {
 # Installing modules.
 $Modules = 'Terminal-Icons', 'PSWindowsUpdate'
 foreach ($Module in $Modules) {
-    Install-Module -Name $Module -Force
+    Write-Host "> Installing module: $Module" -ForegroundColor Green
+    if(Get-Module -Name $Module){
+        Update-Module -Name $Module
+    }else{
+        Install-Module -Name $Module -Force
+    }
 }
 
 # Copying VIM configuration
@@ -32,16 +38,21 @@ Write-Host "> Copying vim profile"
 Copy-Item .\Profiles\.vimrc $HOME
 
 # Using winget to install required programs.
-$apps = 'JanDeDobbeleer.OhMyPosh','vim.vim'
-foreach($app in $apps){
-    winget install --exact --id $app --accept-source-agreements --accept-package-agreements
+$apps = 'JanDeDobbeleer.OhMyPosh', 'vim.vim'
+foreach ($app in $apps) {
+    Write-Host "> Installing winger app: $app" -ForegroundColor Green
+    if (winget list -e $app) {
+        winget update $app
+    }
+    else {
+        winget install --exact --id $app --accept-source-agreements --accept-package-agreements
+    }
 }
 
 # Setting up PowerShell profile.
-## OhMyPosh installation.
-## Profile download from GitHub repository.
-$ProfileUrl = 'https://raw.githubusercontent.com/AlCpwnd/TerminalConfiguration/main/PSProfile.ps1'
-Invoke-WebRequest -Uri $ProfileUrl -UseBasicParsing -OutFile $PROFILE
+## Defining profile.
+Write-Host "> Configuring PowerShell profile." -ForegroundColor Green
+Get-Content -Path .\Profiles\PSProfile.ps1 | Out-File -FilePath $PROFILE -Force -Encoding utf8
 
 # Configures Windows Terminal settings.
 Write-Host "> Importing Windows Terminal settings." -ForegroundColor Green
