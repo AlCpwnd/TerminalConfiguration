@@ -68,7 +68,7 @@
 	"transient_prompt": {
 		"background": "transparent",
 		"foreground": "#FEF5ED",
-		"template": "{{ .Folder }}:>"
+		"template": "|{{ .Folder }}:>"
 	},
 	"version": 4
 }
