@@ -26,7 +26,7 @@
 					"type": "path",
 					"style": "plain",
 					"properties": {
-						"style": "full",
+						"style": "folder",
 						"home_icon": "\ueb06 ",
 						"mapped_locations": {
 							"~/Git": "\ue709 ",
@@ -68,7 +68,7 @@
 	"transient_prompt": {
 		"background": "transparent",
 		"foreground": "#FEF5ED",
-		"template": "{{ .Folder }}:>"
+		"template": "|>"
 	},
 	"version": 4
 }
