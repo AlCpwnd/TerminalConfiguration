@@ -2,7 +2,7 @@
 
 # Installing fonts.
 Write-Host "> Installing fonts." -ForegroundColor Green
-$fonts = Get-ChildItem -Path .\Font -Include *.ttf, *.otf
+$fonts = Get-ChildItem -Path .\Font\* -Include *.ttf, *.otf
 $shell = New-Object -ComObject Shell.Application
 $fontsFolder = $shell.NameSpace(0x14)
 foreach ($font in $fonts) {
@@ -10,25 +10,32 @@ foreach ($font in $fonts) {
 }
 
 # Defining PSGallery as a trusted repository.
-Write-Host "> Defining repositories." -ForegroundColor Green
 if ((Get-PSRepository -Name PSGallery).InstallationPolicy -ne 'Trusted') {
+    Write-Host "> Defining repositories." -ForegroundColor Green
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 }
 
 # Installing package provider.
 $PackageProviders = @('NuGet')
 foreach ($PackageProvider in $PackageProviders) {
-    Write-Host "> Installing package providers: $PackageProvider" -ForegroundColor Green
-    Install-PackageProvider -Name $PackageProvider -Force
+    try {
+        Get-PackageProvider -Name $PackageProvider -ErrorAction Stop | Out-Null
+    }
+    catch {
+        Write-Host "> Installing package providers: $PackageProvider" -ForegroundColor Green
+        Install-PackageProvider -Name $PackageProvider -Force
+    }
 }
 
 # Installing modules.
 $Modules = 'Terminal-Icons', 'PSWindowsUpdate'
 foreach ($Module in $Modules) {
-    Write-Host "> Installing module: $Module" -ForegroundColor Green
-    if(Get-Module -Name $Module){
+    if (Get-Module -Name $Module) {
+        Write-Host "> Updating module: $Module" -ForegroundColor Green
         Update-Module -Name $Module
-    }else{
+    }
+    else {
+        Write-Host "> Installing module: $Module" -ForegroundColor Green
         Install-Module -Name $Module -Force
     }
 }
@@ -40,11 +47,12 @@ Copy-Item .\Profiles\.vimrc $HOME
 # Using winget to install required programs.
 $apps = 'JanDeDobbeleer.OhMyPosh', 'vim.vim'
 foreach ($app in $apps) {
-    Write-Host "> Installing winger app: $app" -ForegroundColor Green
     if (winget list -e $app) {
+        Write-Host "> Updating winget app: $app" -ForegroundColor Green
         winget update $app
     }
     else {
+        Write-Host "> Installing winget app: $app" -ForegroundColor Green
         winget install --exact --id $app --accept-source-agreements --accept-package-agreements
     }
 }
