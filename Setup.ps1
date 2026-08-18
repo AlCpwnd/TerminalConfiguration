@@ -9,6 +9,11 @@ foreach ($font in $fonts) {
     $fontsFolder.CopyHere($font.FullName)
 }
 
+## Recovering the default font name.
+Add-Type -AssemblyName PresentationCore
+$defaultFont = Get-ChildItem -Path .\Font\*Regular.ttf
+$fontName = (New-Object -TypeName Windows.Media.GlyphTypeface -ArgumentList $defaultFont.FullName).Win32FamilyNames.Values
+
 # Defining PSGallery as a trusted repository.
 if ((Get-PSRepository -Name PSGallery).InstallationPolicy -ne 'Trusted') {
     Write-Host "> Defining repositories." -ForegroundColor Green
@@ -83,11 +88,12 @@ else {
     $settings.profiles.defaults | Add-Member -MemberType NoteProperty -Name 'colorScheme' -Value $($theme.name)
 }
 
+## Configuring the fonts
 if (Get-Member -InputObject $settings.profiles.defaults -Name 'font') {
-    $settings.profiles.defaults.font.face = 'UbuntuMono Nerd Font'
+    $settings.profiles.defaults.font.face = $fontName
 }
 else {
-    $settings.profiles.defaults | Add-Member -MemberType NoteProperty -Name 'font' -Value @{face='UbuntuMono Nerd Font'}
+    $settings.profiles.defaults | Add-Member -MemberType NoteProperty -Name 'font' -Value @{face=$fontName}
 }
 
 $settingsContents = $settings | ConvertTo-Json -Depth 3
