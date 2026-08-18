@@ -75,11 +75,19 @@ if (-not ($settings.schemes | Where-Object { $_.name -eq $theme.name } )) {
     $settings.schemes += $theme
 }
 
-if (-not(Get-Member -InputObject $settings.profiles.defaults -Name 'colorScheme')) {
-    $settings.profiles.defaults | Add-Member -MemberType NoteProperty -Name 'colorScheme' -Value $($theme.name)
+## Setting the theme as default
+if (Get-Member -InputObject $settings.profiles.defaults -Name 'colorScheme') {
+    $settings.profiles.defaults.colorScheme = $theme.name
 }
 else {
-    $settings.profiles.defaults.colorScheme = $theme.name
+    $settings.profiles.defaults | Add-Member -MemberType NoteProperty -Name 'colorScheme' -Value $($theme.name)
+}
+
+if (Get-Member -InputObject $settings.profiles.defaults -Name 'font') {
+    $settings.profiles.defaults.font.face = 'UbuntuMono Nerd Font'
+}
+else {
+    $settings.profiles.defaults | Add-Member -MemberType NoteProperty -Name 'font' -Value @{face='UbuntuMono Nerd Font'}
 }
 
 $settingsContents = $settings | ConvertTo-Json -Depth 3
