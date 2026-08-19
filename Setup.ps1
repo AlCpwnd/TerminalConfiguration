@@ -33,7 +33,7 @@ foreach ($PackageProvider in $PackageProviders) {
 }
 
 # Installing modules.
-$Modules = 'Terminal-Icons', 'PSWindowsUpdate'
+$Modules = 'Terminal-Icons', 'PSWindowsUpdate', 'PS-Menu'
 foreach ($Module in $Modules) {
     if (Get-Module -Name $Module) {
         Write-Host "> Updating module: $Module" -ForegroundColor Green
@@ -50,16 +50,11 @@ Write-Host "> Copying vim profile" -ForegroundColor Green
 Copy-Item .\Profiles\.vimrc $HOME
 
 # Using winget to install required programs.
-$apps = 'JanDeDobbeleer.OhMyPosh', 'vim.vim'
-foreach ($app in $apps) {
-    if (winget list -e $app) {
-        Write-Host "> Updating winget app: $app" -ForegroundColor Green
-        winget update $app
-    }
-    else {
-        Write-Host "> Installing winget app: $app" -ForegroundColor Green
-        winget install --exact --id $app --accept-source-agreements --accept-package-agreements
-    }
+$appFiles = Get-ChildItem -Path .\AppList\*.json
+if($appFiles.Count -gt 1){
+    Write-host "Please choose which template to use:"
+    $selection = menu $appFiles.Name -ReturnIndex
+    winget import --import-file $appFiles.FullName[$selection] --accept-package-agreements --accept-source-agreements
 }
 
 # Setting up PowerShell profile.
