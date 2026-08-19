@@ -1,5 +1,10 @@
 #Requires -RunAsAdministrator
 
+# Checking the execution policy.
+if((Get-ExecutionPolicy) -ne 'RemoteSigned'){
+    Set-ExecutionPolicy RemoteSigned -Force
+}
+
 # Installing fonts.
 Write-Host "> Installing fonts." -ForegroundColor Green
 $fonts = Get-ChildItem -Path .\Font\* -Include *.ttf, *.otf
