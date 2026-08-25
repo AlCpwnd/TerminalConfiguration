@@ -1,7 +1,7 @@
 #Requires -RunAsAdministrator
 
 # Checking the execution policy.
-if((Get-ExecutionPolicy) -ne 'RemoteSigned'){
+if ((Get-ExecutionPolicy) -ne 'RemoteSigned') {
     Set-ExecutionPolicy RemoteSigned -Force
 }
 
@@ -54,9 +54,15 @@ foreach ($Module in $Modules) {
 Write-Host "> Copying vim profile" -ForegroundColor Green
 Copy-Item .\Profiles\.vimrc $HOME
 
+# Importing REG files
+$REGs = Get-ChildItem -Path $PSScriptRoot\Registry\*.reg
+foreach ($REG in $REGs) {
+    REG IMPORT $REG.FullName
+}
+
 # Using winget to install required programs.
 $appFiles = Get-ChildItem -Path .\AppList\*.json
-if($appFiles.Count -gt 1){
+if ($appFiles.Count -gt 1) {
     Write-host "Please choose which template to use:"
     $selection = menu $appFiles.Name -ReturnIndex
     winget import --import-file $appFiles.FullName[$selection] --accept-package-agreements --accept-source-agreements
@@ -93,7 +99,7 @@ if (Get-Member -InputObject $settings.profiles.defaults -Name 'font') {
     $settings.profiles.defaults.font.face = $fontName
 }
 else {
-    $settings.profiles.defaults | Add-Member -MemberType NoteProperty -Name 'font' -Value @{face=$fontName}
+    $settings.profiles.defaults | Add-Member -MemberType NoteProperty -Name 'font' -Value @{face = $fontName }
 }
 
 $settingsContents = $settings | ConvertTo-Json -Depth 3
