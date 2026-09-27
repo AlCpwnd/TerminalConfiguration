@@ -102,5 +102,12 @@ else {
     $settings.profiles.defaults | Add-Member -MemberType NoteProperty -Name 'font' -Value @{face = $fontName }
 }
 
+## Disable multi-line paste warning
+if(Get-Member -InputObject $settings -Name 'multiLinePasteWarning'){
+    $settings.multiLinePasteWarning = $false
+}else{
+    $settings | Add-Member -NotePropertyMembers @{multiLinePasteWarning = $false}
+}
+
 $settingsContents = $settings | ConvertTo-Json -Depth 3
 $settingsContents | Out-File -FilePath $SettingsPath -Encoding utf8
