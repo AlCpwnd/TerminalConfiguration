@@ -1,16 +1,78 @@
-#Requires -RunAsAdministrator
+# Checking is the script is being ran as admin.
+$isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 
-# Checking the execution policy.
-if ((Get-ExecutionPolicy) -ne 'RemoteSigned') {
-    Set-ExecutionPolicy RemoteSigned -Force
+# The following changes can only be done of the user is an administrator.
+if ($isAdmin) {
+
+    # Checking the execution policy.
+    if ((Get-ExecutionPolicy) -ne 'RemoteSigned') {
+        Set-ExecutionPolicy RemoteSigned -Force
+    }
+
+    # Defining PSGallery as a trusted repository.
+    if ((Get-PSRepository -Name PSGallery).InstallationPolicy -ne 'Trusted') {
+        Write-Host "> Defining repositories." -ForegroundColor Green
+        Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+    }
+
+    # Installing package provider.
+    $PackageProviders = @('NuGet')
+    foreach ($PackageProvider in $PackageProviders) {
+        try {
+            Get-PackageProvider -Name $PackageProvider -ErrorAction Stop | Out-Null
+        }
+        catch {
+            Write-Host "> Installing package providers: $PackageProvider" -ForegroundColor Green
+            Install-PackageProvider -Name $PackageProvider -Force
+        }
+    }
+
+    # Installing modules.
+    $Modules = 'Terminal-Icons', 'PSWindowsUpdate', 'PS-Menu'
+    foreach ($Module in $Modules) {
+        if (Get-Module -Name $Module) {
+            Write-Host "> Updating module: $Module" -ForegroundColor Green
+            Update-Module -Name $Module
+        }
+        else {
+            Write-Host "> Installing module: $Module" -ForegroundColor Green
+            Install-Module -Name $Module -Force
+        }
+    }
+
+    # Importing REG files
+    $REGs = Get-ChildItem -Path $PSScriptRoot\Registry\*.reg
+    foreach ($REG in $REGs) {
+        REG IMPORT $REG.FullName
+    }
+
+    # Using winget to install required programs.
+    $appFiles = Get-ChildItem -Path .\AppList\*.json
+    if ($appFiles.Count -gt 1) {
+        Write-host "Please choose which template to use:"
+        $selection = menu $appFiles.Name -ReturnIndex
+        winget import --import-file $appFiles.FullName[$selection] --accept-package-agreements --accept-source-agreements
+    }
+    
 }
+
+# Copying VIM configuration
+Write-Host "> Copying vim profile" -ForegroundColor Green
+Copy-Item .\Profiles\.vimrc $HOME
 
 # Installing fonts.
 Write-Host "> Installing fonts." -ForegroundColor Green
+$fontLocations = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Fonts"
+$existingFonts = foreach ($location in $fontLocations) {
+    Get-ItemProperty -Path $location
+}
 $fonts = Get-ChildItem -Path .\Font\* -Include *.ttf, *.otf
 $shell = New-Object -ComObject Shell.Application
 $fontsFolder = $shell.NameSpace(0x14)
 foreach ($font in $fonts) {
+    if ($existingFonts.PSObject.Properties.Value -contains $font.Name) {
+        continue
+    }
     $fontsFolder.CopyHere($font.FullName)
 }
 
@@ -18,55 +80,6 @@ foreach ($font in $fonts) {
 Add-Type -AssemblyName PresentationCore
 $defaultFont = Get-ChildItem -Path .\Font\*Regular.ttf
 $fontName = (New-Object -TypeName Windows.Media.GlyphTypeface -ArgumentList $defaultFont.FullName).Win32FamilyNames.Values
-
-# Defining PSGallery as a trusted repository.
-if ((Get-PSRepository -Name PSGallery).InstallationPolicy -ne 'Trusted') {
-    Write-Host "> Defining repositories." -ForegroundColor Green
-    Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-}
-
-# Installing package provider.
-$PackageProviders = @('NuGet')
-foreach ($PackageProvider in $PackageProviders) {
-    try {
-        Get-PackageProvider -Name $PackageProvider -ErrorAction Stop | Out-Null
-    }
-    catch {
-        Write-Host "> Installing package providers: $PackageProvider" -ForegroundColor Green
-        Install-PackageProvider -Name $PackageProvider -Force
-    }
-}
-
-# Installing modules.
-$Modules = 'Terminal-Icons', 'PSWindowsUpdate', 'PS-Menu'
-foreach ($Module in $Modules) {
-    if (Get-Module -Name $Module) {
-        Write-Host "> Updating module: $Module" -ForegroundColor Green
-        Update-Module -Name $Module
-    }
-    else {
-        Write-Host "> Installing module: $Module" -ForegroundColor Green
-        Install-Module -Name $Module -Force
-    }
-}
-
-# Copying VIM configuration
-Write-Host "> Copying vim profile" -ForegroundColor Green
-Copy-Item .\Profiles\.vimrc $HOME
-
-# Importing REG files
-$REGs = Get-ChildItem -Path $PSScriptRoot\Registry\*.reg
-foreach ($REG in $REGs) {
-    REG IMPORT $REG.FullName
-}
-
-# Using winget to install required programs.
-$appFiles = Get-ChildItem -Path .\AppList\*.json
-if ($appFiles.Count -gt 1) {
-    Write-host "Please choose which template to use:"
-    $selection = menu $appFiles.Name -ReturnIndex
-    winget import --import-file $appFiles.FullName[$selection] --accept-package-agreements --accept-source-agreements
-}
 
 # Setting up PowerShell profile.
 ## Defining profile.
@@ -103,10 +116,11 @@ else {
 }
 
 ## Disable multi-line paste warning
-if(Get-Member -InputObject $settings -Name 'multiLinePasteWarning'){
+if (Get-Member -InputObject $settings -Name 'multiLinePasteWarning') {
     $settings.multiLinePasteWarning = $false
-}else{
-    $settings | Add-Member -NotePropertyMembers @{multiLinePasteWarning = $false}
+}
+else {
+    $settings | Add-Member -NotePropertyMembers @{multiLinePasteWarning = $false }
 }
 
 $settingsContents = $settings | ConvertTo-Json -Depth 3
